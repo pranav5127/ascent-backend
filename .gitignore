@@ -1,0 +1,18 @@
+# python env
+../.venv
+.venv
+
+# idea
+.idea
+notificationService/.idea
+
+
+# environment vars
+notificationService/.env
+.env
+
+
+
+__pycache__/
+*/__pycache__/
+**/__pycache__/
