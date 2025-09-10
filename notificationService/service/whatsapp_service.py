@@ -44,10 +44,6 @@ def send_whatsapp_message(sender_contact: str, message_text: str, receiver_conta
     except Exception as e:
         logging.error(f"Failed to send message: {e}")
 
-res = send_whatsapp_message(
-    "+14155238886", "Hello", ""
-)
-print(type(res))
 
 
 
