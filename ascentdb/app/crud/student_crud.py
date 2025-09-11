@@ -1,4 +1,3 @@
-# app/crud/crud.py
 from sqlalchemy.orm import Session
 from ascentdb.app.models.student import Student
 from ascentdb.app.models.attendance import Attendance
@@ -13,7 +12,7 @@ from ascentdb.app.schemas.reports import ReportsCreate
 
 # ---------------- Student ----------------
 def create_student(db: Session, student: StudentCreate):
-    db_student = Student(**student.dict())
+    db_student = Student(**student.model_dump())
     db.add(db_student)
     db.commit()
     db.refresh(db_student)
@@ -27,7 +26,7 @@ def get_student(db: Session, student_id):
 
 # ---------------- Attendance ----------------
 def create_attendance(db: Session, attendance: AttendanceCreate):
-    db_attendance = Attendance(**attendance.dict())
+    db_attendance = Attendance(**attendance.model_dump())
     db.add(db_attendance)
     db.commit()
     db.refresh(db_attendance)
@@ -38,7 +37,7 @@ def get_attendance_by_student(db: Session, student_id):
 
 # ---------------- Marks ----------------
 def create_marks(db: Session, marks: MarksCreate):
-    db_marks = Marks(**marks.dict())
+    db_marks = Marks(**marks.model_dump())
     db.add(db_marks)
     db.commit()
     db.refresh(db_marks)
@@ -49,7 +48,7 @@ def get_marks_by_student(db: Session, student_id):
 
 # ---------------- Activities ----------------
 def create_activity(db: Session, activity: ActivitiesCreate):
-    db_activity = Activities(**activity.dict())
+    db_activity = Activities(**activity.model_dump())
     db.add(db_activity)
     db.commit()
     db.refresh(db_activity)
@@ -60,7 +59,7 @@ def get_activities_by_student(db: Session, student_id):
 
 # ---------------- Reports ----------------
 def create_report(db: Session, report: ReportsCreate):
-    db_report = Reports(**report.dict())
+    db_report = Reports(**report.model_dump())
     db.add(db_report)
     db.commit()
     db.refresh(db_report)
