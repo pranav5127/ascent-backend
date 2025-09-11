@@ -21,5 +21,6 @@ class ActivitiesUpdate(BaseModel):
 class ActivitiesResponse(ActivitiesBase):
     id: UUID
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
