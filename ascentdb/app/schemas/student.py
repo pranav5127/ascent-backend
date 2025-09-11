@@ -22,5 +22,6 @@ class StudentResponse(StudentBase):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        orm_mode = True # Lets Pydantic read orm objects directly.
+    model_config = {
+        "from_attributes": True
+    } # Lets Pydantic read orm objects directly.
