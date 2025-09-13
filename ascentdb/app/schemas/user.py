@@ -6,6 +6,7 @@ from ascentdb.app.core.enums import UserRole
 class UserBase(BaseModel):
     email: EmailStr
     role: UserRole
+    mobile_number: str
 
 class UserCreate(UserBase):
     external_id: str

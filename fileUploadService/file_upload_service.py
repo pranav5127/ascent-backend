@@ -4,11 +4,9 @@ from pydantic import BaseModel, ValidationError
 import csv, io, json, os
 import aiofiles
 from typing import Optional, List
+import uvicorn
 
 app = FastAPI(title="File Upload & Parsing Service")
-
-
-# Models (from your schema)
 
 class Student(BaseModel):
     id: Optional[int]
@@ -27,10 +25,7 @@ class Report(BaseModel):
     file_url: Optional[str] = None
     date: Optional[str] = None
 
-
 # Helpers
-
-
 def parse_csv_bytes(b: bytes) -> List[dict]:
     text = b.decode("utf-8", errors="replace")
     reader = csv.DictReader(io.StringIO(text))
@@ -77,8 +72,6 @@ def validate_parsed(parsed: List[dict], file_type: str) -> List[dict]:
     return validated_data
 
 
-# Endpoints
-
 
 @app.get("/")
 def root():
@@ -87,7 +80,7 @@ def root():
 @app.post("/upload")
 async def upload_file(
     file: UploadFile = File(...),
-    file_type: str = Form(...),  # students | attendance | reports
+    file_type: str = Form(...),
 ):
     filename = file.filename or "uploaded"
     ext = os.path.splitext(filename)[1].lower()
@@ -120,6 +113,13 @@ async def upload_file(
         "filename": filename,
         "rows_received": len(parsed),
         "rows_validated": len(validated),
-        "sample": validated[:5],  # show first few
+        "sample": validated[:5],
         "saved_path": saved_path
     })
+if __name__ == "__main__":
+    uvicorn.run(
+        "fileUploadService.file_upload_service:app",
+        host="0.0.0.0",
+        port=9990,
+        reload=True
+    )
