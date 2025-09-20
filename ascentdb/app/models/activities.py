@@ -7,7 +7,7 @@ from ascentdb.app.database import Base
 class Activities(Base):
     __tablename__ = "activities"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4(), unique=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True)
     student_id = Column(UUID(as_uuid=True), ForeignKey("students.id"), nullable=False)
     activity_type = Column(String, nullable=False)
     description = Column(Text)

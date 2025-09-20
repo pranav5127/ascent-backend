@@ -165,9 +165,9 @@ async def generate_student_reports(students: List[StudentData]):
             student_name=student.student_name,
             report_data=report
         ))
-
+    print(reports)
     return reports
 
 # -------------------- Run Server --------------------
 if __name__ == "__main__":
-    uvicorn.run("ollama_service:app", host="0.0.0.0", port=9999, reload=True)
+    uvicorn.run("report_generation_service:app", host="0.0.0.0", port=9999, reload=True)
