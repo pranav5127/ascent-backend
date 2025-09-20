@@ -1,6 +1,8 @@
+import uvicorn
 from fastapi import FastAPI
 
-from dbService.ascentdb.app.routers import marks, reports, attendance, activities, users, students
+from ascentdb.app.routers import reports, attendance, activities, users, students
+from ascentdb.app.routers import marks
 
 app = FastAPI(title="AscentDB API")
 
@@ -12,11 +14,10 @@ app.include_router(activities.router)
 app.include_router(reports.router)
 app.include_router(users.router)
 
-# using vercel for the server
-# if __name__ == "__main__":
-#     uvicorn.run(
-#         "ascentdb.app.main:app",
-#         host="0.0.0.0",
-#         port=9900,
-#         reload=True
-#     )
+if __name__ == "__main__":
+    uvicorn.run(
+        "ascentdb.app.main:app",
+        host="0.0.0.0",
+        port=9900,
+        reload=True
+    )

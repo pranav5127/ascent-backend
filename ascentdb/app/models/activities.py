@@ -2,7 +2,7 @@ import  uuid
 from sqlalchemy import Column, String, Date, ForeignKey, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import  relationship
-from dbService.ascentdb.app.database import Base
+from ascentdb.app.database import Base
 
 class Activities(Base):
     __tablename__ = "activities"

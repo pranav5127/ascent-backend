@@ -1,4 +1,4 @@
-from dbService.ascentdb.app.database import Base, engine
+from ascentdb.app.database import Base, engine
 
 
 def init_db():

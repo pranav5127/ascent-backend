@@ -1,14 +1,14 @@
 from sqlalchemy.orm import Session
-from dbService.ascentdb.app.models.student import Student
-from dbService.ascentdb.app.models.attendance import Attendance
-from dbService.ascentdb.app.models.marks import Marks
-from dbService.ascentdb.app.models.activities import Activities
-from dbService.ascentdb.app.models.reports import Reports
-from dbService.ascentdb.app.schemas.student import StudentCreate
-from dbService.ascentdb.app.schemas.attendance import AttendanceCreate
-from dbService.ascentdb.app.schemas.marks import MarksCreate
-from dbService.ascentdb.app.schemas.activities import ActivitiesCreate
-from dbService.ascentdb.app.schemas.reports import ReportsCreate
+from ascentdb.app.models.student import Student
+from ascentdb.app.models.attendance import Attendance
+from ascentdb.app.models.marks import Marks
+from ascentdb.app.models.activities import Activities
+from ascentdb.app.models.reports import Reports
+from ascentdb.app.schemas.student import StudentCreate
+from ascentdb.app.schemas.attendance import AttendanceCreate
+from ascentdb.app.schemas.marks import MarksCreate
+from ascentdb.app.schemas.activities import ActivitiesCreate
+from ascentdb.app.schemas.reports import ReportsCreate
 
 # ---------------- Student ----------------
 def create_student(db: Session, student: StudentCreate):

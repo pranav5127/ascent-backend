@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, ForeignKey, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from dbService.ascentdb.app.database import Base
+from ascentdb.app.database import Base
 
 class Student(Base):
     __tablename__ = "students"

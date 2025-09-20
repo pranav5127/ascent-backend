@@ -1,7 +1,7 @@
 from pydantic import  BaseModel, EmailStr
 from uuid import UUID
 from datetime import  datetime
-from dbService.ascentdb.app.core.enums import UserRole
+from ascentdb.app.core.enums import UserRole
 
 class UserBase(BaseModel):
     email: EmailStr

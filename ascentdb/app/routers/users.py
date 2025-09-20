@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from typing import List
 from uuid import uuid4, UUID
 
-from dbService.ascentdb.app.database import get_db
-from dbService.ascentdb.app.models.user import User
-from dbService.ascentdb.app.schemas.user import UserCreate, UserResponse
+from ascentdb.app.database import get_db
+from ascentdb.app.models.user import User
+from ascentdb.app.schemas.user import UserCreate, UserResponse
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
