@@ -14,10 +14,10 @@ app.include_router(activities.router)
 app.include_router(reports.router)
 app.include_router(users.router)
 
-if __name__ == "__main__":
-    uvicorn.run(
-        "ascentdb.app.main:app",
-        host="0.0.0.0",
-        port=9900,
-        reload=True
-    )
+# if __name__ == "__main__":
+#     uvicorn.run(
+#         "ascentdb.app.main:app",
+#         host="0.0.0.0",
+#         port=9900,
+#         reload=True
+#     )
