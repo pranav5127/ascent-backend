@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 
-from ascentdb.app.routers import students, attendance, marks, activities, reports, users
-import uvicorn
+from dbService.ascentdb.app.routers import marks, reports, attendance, activities, users, students
 
 app = FastAPI(title="AscentDB API")
 

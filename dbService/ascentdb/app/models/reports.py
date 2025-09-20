@@ -3,7 +3,7 @@ from sqlalchemy import  Column, DateTime, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import  relationship
 from sqlalchemy.sql import  func
-from ascentdb.app.database import Base
+from dbService.ascentdb.app.database import Base
 
 class Reports(Base):
     __tablename__  = "reports"

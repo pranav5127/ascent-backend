@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
-from ascentdb.app.database import get_db
-from ascentdb.app.schemas.activities import ActivitiesCreate, ActivitiesResponse
-from ascentdb.app.crud.student_crud import create_activity, get_activities_by_student
+from dbService.ascentdb.app.database import get_db
+from dbService.ascentdb.app.schemas.activities import ActivitiesCreate, ActivitiesResponse
+from dbService.ascentdb.app.crud.student_crud import create_activity, get_activities_by_student
 
 router = APIRouter(prefix="/activities", tags=["Activities"])
 

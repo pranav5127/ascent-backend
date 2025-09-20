@@ -3,8 +3,8 @@ from sqlalchemy import Column, String, DateTime, Enum
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from ascentdb.app.database import Base
-from ascentdb.app.core.enums import UserRole
+from dbService.ascentdb.app.database import Base
+from dbService.ascentdb.app.core.enums import UserRole
 
 class User(Base):
     __tablename__ = "users"

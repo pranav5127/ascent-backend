@@ -1,8 +1,8 @@
 import uuid
-from sqlalchemy import Column, String, Date, ForeignKey, Text
+from sqlalchemy import Column, String, Date, ForeignKey
 from sqlalchemy.dialects.postgresql import  UUID, JSONB
 from sqlalchemy.orm import relationship
-from ascentdb.app.database import Base
+from dbService.ascentdb.app.database import Base
 
 class Marks(Base):
     __tablename__ = "marks"

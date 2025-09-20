@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from ascentdb.app.database import get_db
-from ascentdb.app.schemas.reports import ReportsCreate, ReportsResponse
-from ascentdb.app.crud.student_crud import create_or_update_report, get_reports_by_student
+from dbService.ascentdb.app.database import get_db
+from dbService.ascentdb.app.schemas.reports import ReportsCreate, ReportsResponse
+from dbService.ascentdb.app.crud.student_crud import create_or_update_report, get_reports_by_student
 
 router = APIRouter(prefix="/reports", tags=["Reports"])
 

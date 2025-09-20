@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy import  Column, String, Integer, ForeignKey
 from sqlalchemy.dialects.postgresql import  UUID
 from sqlalchemy.orm import relationship
-from ascentdb.app.database import Base
+from dbService.ascentdb.app.database import Base
 
 class Attendance(Base):
     __tablename__ = "attendance"
