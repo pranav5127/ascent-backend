@@ -1,4 +1,3 @@
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from ascentdb.app.models.student import Student
 from ascentdb.app.models.attendance import Attendance
@@ -11,7 +10,6 @@ from ascentdb.app.schemas.marks import MarksCreate
 from ascentdb.app.schemas.activities import ActivitiesCreate
 from ascentdb.app.schemas.reports import ReportsCreate
 
-
 # ---------------- Student ----------------
 def create_student(db: Session, student: StudentCreate):
     db_student = Student(**student.model_dump())
@@ -20,14 +18,11 @@ def create_student(db: Session, student: StudentCreate):
     db.refresh(db_student)
     return db_student
 
-
 def get_students(db: Session):
     return db.query(Student).all()
 
-
 def get_student(db: Session, student_id):
     return db.query(Student).filter(Student.id == student_id).first()
-
 
 # ---------------- Attendance ----------------
 def create_attendance(db: Session, attendance: AttendanceCreate):
@@ -51,7 +46,6 @@ def create_attendance(db: Session, attendance: AttendanceCreate):
 
 def get_attendance_by_student(db: Session, student_id):
     return db.query(Attendance).filter(Attendance.student_id == student_id).all()
-
 
 # ---------------- Marks ----------------
 def create_marks(db: Session, marks: MarksCreate):
@@ -151,3 +145,5 @@ def get_reports_by_student(db: Session, student_id: str):
         report.student.parent.mobile_number if report.student and report.student.parent else None
     )
     return report
+
+
