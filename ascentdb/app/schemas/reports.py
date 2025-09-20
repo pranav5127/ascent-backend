@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from uuid import UUID
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 class ReportsBase(BaseModel):
     student_id: UUID
@@ -12,13 +12,14 @@ class ReportsCreate(ReportsBase):
     pass
 
 class ReportsUpdate(BaseModel):
-    report: Dict[str, Any] | None
-    summary: Dict[str, Any] | None
+    report: Optional[Dict[str, Any]] = None
+    summary: Optional[Dict[str, Any]] = None
 
 class ReportsResponse(ReportsBase):
     id: UUID
     generated_at: datetime
+    student_name: Optional[str] = None
+    parent_mobile: Optional[str] = None
 
-    model_config = {
-        "from_attributes": True
-    }
+    class Config:
+        orm_mode = True

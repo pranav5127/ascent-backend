@@ -13,7 +13,7 @@ class User(Base):
     external_id = Column(String, unique=True, nullable=False)
     email = Column(String, unique=True, nullable=False)
     role = Column(Enum(UserRole), nullable=False)
-    mobile_number = Column(String, unique=True, nullable=True)
+    mobile_number = Column(String, unique=True, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 

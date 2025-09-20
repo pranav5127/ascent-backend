@@ -23,7 +23,9 @@ def add_user(user: UserCreate, db: Session = Depends(get_db)):
         id=uuid4(),
         email=user.email,
         external_id=user.external_id,
-        role=user.role
+        role=user.role,
+        mobile_number=user.mobile_number,
+
     )
     db.add(new_user)
     db.commit()

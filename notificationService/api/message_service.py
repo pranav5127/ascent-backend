@@ -44,6 +44,7 @@ async def message(data: ApiData):
         )
 
 if __name__ == "__main__":
-    uvicorn.run("notificationService.api.message_service:app", port=42000, log_level="info")
+    uvicorn.run("notificationService.api.message_service:app", host="0.0.0.0", port=42000, log_level="info")
+
 
 

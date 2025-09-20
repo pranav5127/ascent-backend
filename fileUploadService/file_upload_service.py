@@ -71,8 +71,6 @@ def validate_parsed(parsed: List[dict], file_type: str) -> List[dict]:
 
     return validated_data
 
-
-
 @app.get("/")
 def root():
     return {"message": "Welcome to File Upload & Parsing Service"}
