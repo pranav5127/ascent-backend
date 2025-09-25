@@ -4,7 +4,8 @@ from typing import List
 from uuid import UUID
 from ascentdb.app.database import get_db
 from ascentdb.app.schemas.resources import ResourceBase, ResourceResponse
-from ascentdb.app.crud.resources import add_resource, get_resource, get_resources_by_class, update_resource, delete_resource
+from ascentdb.app.crud.resources import add_resource, get_resource, update_resource, \
+    delete_resource, get_resources_by_class_and_subject
 
 router = APIRouter(prefix="/resources", tags=["Resources"])
 
@@ -19,9 +20,12 @@ def get_resource_endpoint(resource_id: UUID, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Resource not found")
     return res
 
-@router.get("/class/{class_id}", response_model=List[ResourceResponse])
-def get_resources_by_class_endpoint(class_id: UUID, db: Session = Depends(get_db)):
-    return get_resources_by_class(db, class_id)
+@router.get("/class/{class_id}/subject/{subject_id}", response_model=List[ResourceResponse])
+def get_resources_by_class_and_subject_endpoint(class_id: UUID, subject_id: UUID, db: Session = Depends(get_db)):
+    res = get_resources_by_class_and_subject(db, class_id, subject_id)
+    if not res:
+        raise HTTPException(status_code=404, detail="No resources found for this class and subject")
+    return res
 
 @router.put("/{resource_id}", response_model=ResourceResponse)
 def update_resource_endpoint(resource_id: UUID, update_data: dict, db: Session = Depends(get_db)):

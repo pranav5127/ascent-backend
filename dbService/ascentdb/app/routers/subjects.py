@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from typing import List
 from uuid import UUID
 
-from ascentdb.app.crud.subjects import create_subject, get_subject, get_all_subjects, update_subject, delete_subject
+from ascentdb.app.crud.subjects import create_subject, get_subject, get_all_subjects, update_subject, delete_subject, \
+    get_subjects_by_class
 from ascentdb.app.database import get_db
 from ascentdb.app.schemas.subjects import SubjectCreate, SubjectResponse
 
@@ -30,6 +31,14 @@ def update_subject_endpoint(subject_id: UUID, update_data: dict, db: Session = D
     if not sub:
         raise HTTPException(status_code=404, detail="Subject not found")
     return sub
+
+@router.get("/class/{class_id}", response_model=List[SubjectResponse])
+def get_subjects_by_class_endpoint(class_id: UUID, db: Session = Depends(get_db)):
+    subs = get_subjects_by_class(db, class_id)
+    if not subs:
+        raise HTTPException(status_code=404, detail="No subjects found for this class")
+    return subs
+
 
 @router.delete("/{subject_id}", response_model=SubjectResponse)
 def delete_subject_endpoint(subject_id: UUID, db: Session = Depends(get_db)):

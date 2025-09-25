@@ -7,6 +7,7 @@ class ResourceBase(BaseModel):
     class_id: UUID
     title: str
     type: str
+    subject_id: Optional[UUID] = None
     description: Optional[str] = None
     file_url: Optional[str] = None
     due_date: Optional[date] = None

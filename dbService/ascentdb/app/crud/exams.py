@@ -59,3 +59,11 @@ def add_exam_mark(db: Session, mark: ExamMarkBase):
 
 def get_exam_marks(db: Session, exam_id):
     return db.query(ExamMark).filter(ExamMark.exam_id == exam_id).all()
+
+def get_student_marks_for_exam(db: Session, student_id, exam_id):
+    return (
+        db.query(ExamMark)
+        .filter(ExamMark.student_id == student_id, ExamMark.exam_id == exam_id)
+        .all()
+    )
+

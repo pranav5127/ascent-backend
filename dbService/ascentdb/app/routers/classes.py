@@ -4,7 +4,7 @@ from typing import List
 from uuid import UUID
 
 from ascentdb.app.crud.classes import create_class, get_class, get_all_classes, update_class, delete_class, \
-    add_student_to_class, remove_student_from_class
+    add_student_to_class, remove_student_from_class, get_students_in_class
 from ascentdb.app.database import get_db
 from ascentdb.app.schemas.class_schemas import ClassResponse, ClassCreate, ClassStudentResponse, ClassStudentCreate
 
@@ -51,3 +51,10 @@ def remove_student_endpoint(student_id: UUID, class_id: UUID, db: Session = Depe
     if not result:
         raise HTTPException(status_code=404, detail="Student not found in class")
     return result
+
+@router.get("/{class_id}/students", response_model=List[ClassStudentResponse])
+def get_students_in_class_endpoint(class_id: UUID, db: Session = Depends(get_db)):
+    students = get_students_in_class(db, class_id)
+    if not students:
+        raise HTTPException(status_code=404, detail="No students found in this class")
+    return students

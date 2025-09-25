@@ -43,6 +43,10 @@ def add_student_to_class(db: Session, student: ClassStudentCreate):
     db.refresh(db_obj)
     return db_obj
 
+def get_students_in_class(db: Session, class_id):
+    return db.query(ClassStudent).filter(ClassStudent.class_id == class_id).all()
+
+
 def remove_student_from_class(db: Session, student_id, class_id):
     db_obj = db.query(ClassStudent).filter(
         ClassStudent.student_id == student_id, ClassStudent.class_id == class_id

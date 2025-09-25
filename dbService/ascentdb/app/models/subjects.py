@@ -12,3 +12,5 @@ class Subject(Base):
     name = Column(String, nullable=False)
 
     cls = relationship("Class", back_populates="subjects")
+    resources = relationship("Resource", back_populates="subject")
+

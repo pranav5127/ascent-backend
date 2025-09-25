@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from sqlalchemy.orm import Session
 from ascentdb.app.models.subjects import Subject
 from ascentdb.app.schemas.subjects import SubjectCreate
@@ -11,6 +13,9 @@ def create_subject(db: Session, sub: SubjectCreate):
 
 def get_subject(db: Session, subject_id):
     return db.query(Subject).filter(Subject.id == subject_id).first()
+
+def get_subjects_by_class(db: Session, class_id: UUID):
+    return db.query(Subject).filter(Subject.class_id == class_id).all()
 
 def get_all_subjects(db: Session):
     return db.query(Subject).all()

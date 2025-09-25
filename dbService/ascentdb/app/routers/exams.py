@@ -11,7 +11,7 @@ from ascentdb.app.schemas.exams import (
 from ascentdb.app.crud.exams import (
     create_exam, get_exam, get_all_exams,
     update_exam, delete_exam,
-    add_exam_mark, get_exam_marks
+    add_exam_mark, get_exam_marks, get_student_marks_for_exam
 )
 
 router = APIRouter(prefix="/exams", tags=["Exams"])
@@ -60,3 +60,10 @@ def add_exam_mark_endpoint(mark: ExamMarkBase, db: Session = Depends(get_db)):
 @router.get("/{exam_id}/marks", response_model=List[ExamMarkResponse])
 def get_exam_marks_endpoint(exam_id: UUID, db: Session = Depends(get_db)):
     return get_exam_marks(db, exam_id)
+
+@router.get("/{exam_id}/student/{student_id}/marks", response_model=List[ExamMarkResponse])
+def get_student_marks_for_exam_endpoint(exam_id: UUID, student_id: UUID, db: Session = Depends(get_db)):
+    marks = get_student_marks_for_exam(db, student_id, exam_id)
+    if not marks:
+        raise HTTPException(status_code=404, detail="No marks found for this student in this exam")
+    return marks
