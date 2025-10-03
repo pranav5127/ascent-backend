@@ -8,9 +8,9 @@ from pydantic import BaseModel
 
 # -------------------- FastAPI App --------------------
 app = FastAPI(
-    title="Student Report Generator",
-    description="Generate structured student reports using Ollama AI.",
-    version="1.0.0"
+    title="Student Report Generator & Chatbot",
+    description="Generate structured student reports or chat with Ollama AI.",
+    version="1.1.0"
 )
 
 # -------------------- Schemas --------------------
@@ -53,11 +53,36 @@ class ReportResponse(BaseModel):
     student_name: str
     report_data: GeneratedReport
 
+# ✅ New: Chat schema
+class ChatRequest(BaseModel):
+    message: str
+    model: str = "tinyllama:latest"
+
+class ChatResponse(BaseModel):
+    reply: str
+
 # -------------------- Ollama Config --------------------
 OLLAMA_API_ENDPOINT = "http://localhost:11434/api/generate"
 
-def get_report_from_ollama(student_data: dict) -> GeneratedReport:
+def call_ollama(prompt: str, model: str = "tinyllama:latest", expect_json: bool = False):
+    payload = {
+        "model": model,
+        "prompt": prompt,
+        "stream": False
+    }
 
+    if expect_json:
+        payload["format"] = "json"
+
+    try:
+        response = requests.post(OLLAMA_API_ENDPOINT, json=payload, timeout=120)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        raise HTTPException(status_code=500, detail=f"Failed to connect to Ollama: {e}")
+
+    return response.json().get("response", "")
+
+def get_report_from_ollama(student_data: dict) -> GeneratedReport:
     prompt = f"""
 You are an AI that generates a detailed student progress report for parents.
 
@@ -72,29 +97,9 @@ Requirements:
 - Do NOT include nested objects inside "detailed_report" or "summary".
 - Close all strings properly.
 - Return JSON only; no extra text.
-
-Return JSON in this exact format:
-{{ 
-  "detailed_report": "text here", 
-  "summary": "text here" 
-}}
 """
 
-    payload = {
-        "model": "tinyllama:latest",
-        "prompt": prompt,
-        "stream": False,
-        "format": "json"
-    }
-
-    # Call Ollama API
-    try:
-        response = requests.post(OLLAMA_API_ENDPOINT, json=payload, timeout=120)
-        response.raise_for_status()
-    except requests.RequestException as e:
-        raise HTTPException(status_code=500, detail=f"Failed to connect to Ollama: {e}")
-
-    ai_response_text = response.json().get("response", "{}")
+    ai_response_text = call_ollama(prompt, expect_json=True)
 
     # Extract first JSON object
     match = re.search(r"\{.*\}", ai_response_text, re.DOTALL)
@@ -117,7 +122,7 @@ Return JSON in this exact format:
 
     return GeneratedReport(**report_data)
 
-# -------------------- API Endpoint --------------------
+# -------------------- API Endpoints --------------------
 @app.post("/generate-reports", response_model=List[ReportResponse])
 async def generate_student_reports(students: List[StudentData]):
     """
@@ -167,6 +172,12 @@ async def generate_student_reports(students: List[StudentData]):
         ))
     print(reports)
     return reports
+
+@app.post("/chat", response_model=ChatResponse)
+async def chat_with_ai(chat_request: ChatRequest):
+
+    reply = call_ollama(chat_request.message, model=chat_request.model)
+    return ChatResponse(reply=reply)
 
 # -------------------- Run Server --------------------
 if __name__ == "__main__":
